@@ -1,0 +1,35 @@
+<ng-http-loader spinner="sk-wave"></ng-http-loader>
+<div class="table" *ngIf="issuedBooks.length>0;else noIssuedBooks">
+    <table class="table table bordered">
+        <thead>
+            <tr>
+                <th>Book Title</th>
+                <th>Issued Date</th>
+                <th>Renew/Return Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let issuedBook of issuedBooks; let i = index">
+                <td>{{issuedBook.Title}}</td>
+                <td>{{issuedBook.IssuedDate | date: 'dd, MMMM yyyy'}}</td>
+                <td>{{issuedBook.ReturnDate | date: 'dd, MMMM yyyy'}} </td>
+                <td><button class="btn btn-primary" (click)="onRenew(issuedBook)">Renew</button></td>
+                <td><button class="btn btn-primary" (click)="onReturn(issuedBook)">Return</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<ng-template #noIssuedBooks>
+    <h3>No books issued to the user</h3>
+</ng-template>
+
+<!-- <div class="example-container mat-elevation-z8">
+    <mat-table #table [dataSource]="dataSorce" matSort>
+        <ng-container matColumnDef="bookTitle">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Book Title </mat-header-cell>
+            <mat-cell *matCellDef="let issuedBook"> {{issuedBook.Title}} </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+</div> -->

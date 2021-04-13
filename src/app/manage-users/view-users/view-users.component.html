@@ -1,0 +1,28 @@
+<ng-http-loader spinner="sk-wave"></ng-http-loader>
+<div class="row">
+  <a class="btn btn-primary" class="btn btn-lg btn-primary"
+    routerLink="/users/add-user" 
+    type="button" 
+    style="float: right; margin-bottom: 10px">Add User</a>
+</div>
+<div class="container table-responsive">
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Role</th>
+        <th></th>
+        <!-- <th></th> -->
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.Name }}</td>
+        <td>{{ user.Role }}</td>
+        <td><button class="btn btn-primary" (click)="onEdit(user.SocialId)">Edit</button></td>
+        <!-- <td><button class="btn btn-primary" (click)="onViewBooks(user)">View Books</button></td> -->
+        <!-- <td><button class="btn btn-danger" (click)="onDelete(user.SocialId)">Delete</button></td> -->
+      </tr>
+    </tbody>
+  </table>
+</div>

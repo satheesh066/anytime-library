@@ -1,0 +1,27 @@
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a routerLink="" class="navbar-brand">AnyTime Library</a>
+    </div>
+      <ul class="nav navbar-nav">
+        <li routerLinkActive="active" *ngIf="!isAuthenticated"><a routerLink="/auth">SignUp/Login</a></li>
+        <ng-container *ngIf="isAuthenticated">
+          <li routerLinkActive="active"><a routerLink="/book/view-books">Book</a></li>
+          <li routerLinkActive="active"><a routerLink="/book/book-history">Book History</a></li>
+          <li routerLinkActive="active" *ngIf="user?.Role === 'Admin'"><a routerLink="/users/view-users">Manage Users</a></li>
+          <li routerLinkActive="active" *ngIf="user?.Role === 'Admin'"><a routerLink="/users/view-user-books">Users Books</a></li>
+          <li routerLinkActive="active" *ngIf="user?.Role === 'Admin'"><a routerLink="/book/add-book">Add Book</a></li>
+        </ng-container>
+      </ul>
+      <ul class="nav navbar-nav navbar-right" *ngIf="isAuthenticated">
+        <li><a style="cursor: pointer;" role="button" (click)="onLogout()">LogOut</a></li>
+        <li class="dropdown" appDropdown>
+          <a style="cursor: pointer;" class="dropdown-toggle" role="button">{{ user?.Name }} <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a style="cursor: pointer;" routerLink="/add-user-info">Edit Profile</a></li>
+            <li><a style="cursor: pointer;">{{ user?.SocialId }}</a></li>
+          </ul>   
+        </li>
+      </ul>
+  </div>
+</nav>

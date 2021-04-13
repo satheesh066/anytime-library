@@ -1,0 +1,86 @@
+<ng-http-loader spinner="sk-wave"></ng-http-loader>
+<div class="container" style="margin-top: 20px">
+  <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+    <form #f="ngForm">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input 
+                type="text" 
+                id="name" 
+                name="name" 
+                class="form-control" 
+                [(ngModel)]="user.Name"
+                #name="ngModel" 
+                required>
+            </div>
+            <p class="help-block error-message" *ngIf="!name.valid && name.touched">
+              Please enter Name
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label for="socialId">EmailId</label>
+              <input type="email" id="socialId" name="socialId" 
+                class="form-control" [(ngModel)]="user.SocialId" 
+                #socailId="ngModel"
+                required
+                [disabled]="!isEditable"
+                email>
+            </div>
+            <p class="help-block error-message" *ngIf="!socailId.valid && socailId.touched">
+              Please enter socailId
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label class="control-label" for="role">Role</label>
+              <select class="form-control" name="role" [(ngModel)]="user.Role" 
+                [disabled]="!isEditable"
+                #role="ngModel"
+                required>
+                <option disabled>Select Role..</option>
+                <option>Admin</option>
+                <option>User</option>
+              </select>
+          </div>
+          <p class="help-block error-message" *ngIf="!role.valid && role.touched">
+            Please enter role
+          </p>
+        </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label for="genres" class="control-label">Favourite Genres</label>
+              <mat-select placeholder="Select favourite genres" 
+                name="favoriteGenres"
+                [(ngModel)]="user.FavoriteGenres"
+                class="form-control"
+                multiple>
+                <mat-option *ngFor="let category of categories" [value]="category.CategoryName">
+                  {{category.CategoryName}}
+                </mat-option> 
+              </mat-select>
+              <!-- <select class="drop-down" class="form-control" name="favoriteGenres" [(ngModel)]="user.FavoriteGenres" 
+                #category="ngModel" 
+                required>
+                <option disabled>Select Category..</option>
+                <option *ngFor="let category of categories" [value]="category.CategoryName">
+                  {{category.CategoryName}}
+                </option>
+              </select> -->
+            </div>
+          </div>
+        </div>
+      <button class="btn btn-primary" type="submit" 
+        (click)="onSubmit()"
+        [disabled]="f.invalid">Submit</button>
+    </form>
+  </div>
+</div>

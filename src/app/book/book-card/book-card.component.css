@@ -1,0 +1,27 @@
+.book-card {
+    text-align: center;
+    display: inline-block;
+    background: #f1f1f1;
+    width: 200px;
+    cursor: pointer;
+    margin: 10px;
+    box-shadow: 1px 4px 1px 0 rgba(0, 0, 0, .2);
+}
+
+.book-card:hover, .book-card.active {
+    /*border: 1px solid #bd9c9c;*/
+    -webkit-box-shadow: 0 7px 7px 0 #a8a8a8;
+    -moz-box-shadow: 0 7px 7px 0 #a8a8a8;
+    box-shadow: 0 7px 7px 0 #a8a8a8;
+}
+
+.book-info {
+    margin-top: 10px!important;
+    margin-bottom: 10px!important;
+    font-weight: 400;
+    font-size: 4px
+}
+
+.book-label {
+    font-size: 11px;
+}

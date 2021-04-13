@@ -1,0 +1,85 @@
+<!-- <div class="row">
+    <a class="btn btn-primary"
+      routerLink="/manage-users/add-user" 
+      type="button" 
+      style="float: right; margin-bottom: 10px">Add User</a>
+</div> -->
+<!-- <div class="control-label" *ngIf="isLoading;else showBooks">
+    <p>Loading..Please Wait</p>
+</div>
+<ng-template #showBooks>
+    <div>
+        <h3>Showing books of {{ userName }}</h3>
+    </div>
+    <div *ngIf="books.length === 0;else showingBooks">
+        <h2>No Issued Books</h2>
+    </div>
+    <ng-template #showingBooks>
+        <div class="container">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                    <th>Title</th>
+                    <th>Author(s)</th>
+                    <th>IssuedDate</th>
+                    <th>Return Date</th> -->
+                    <!-- <th></th> -->
+                    <!-- </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let book of books">
+                    <td>{{ book?.Title }}</td>
+                    <td>{{ book?.Authors }}</td>
+                    <td>{{ book?.IssuedDate }}</td>
+                    <td>{{ book?.ReturnDate }}</td> -->
+                    <!-- <td><button class="btn btn-primary" (click)="onRenew(book.Id)">Renew</button></td> -->
+                    <!-- </tr>
+                </tbody>
+            </table>
+        </div>
+    </ng-template>
+</ng-template> -->
+
+<ng-http-loader spinner="sk-wave"></ng-http-loader>
+<div class="row" *ngIf="users.length>0">
+    <div class="col-md-4">
+        <mat-form-field>
+            <mat-select placeholder="Select user" [(ngModel)]="selectedId">
+              <mat-option *ngFor="let user of users" [value]="user.SocialId">
+                {{ user.Name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+    </div>
+    <div class="col-md-4"></div>
+    <div class="col-sm-4">
+        <input for='search' 
+            class="form-control"
+            placeholder="Search by Title or Author or category..." 
+            [(ngModel)]="searchText">
+    </div>
+</div>
+
+<div class="row">
+    <ng-container *ngIf="issuedBooks.length>0">
+      <!-- <h4>Showing taken by {{currentUser.Name}}</h4> -->
+      <hr>
+      <div *ngFor="let book of issuedBooks | UserBooksPipe : selectedId | SearchBookPipe: searchText, let i = index">
+        <div class="clearfix" *ngIf="i%4==0"></div>
+        <div class="col-md-3">
+            <button class="list-group-item" style="height:350px">
+                <img [src]="book.ImageUrl" 
+                    alt="{{book.Title}}" 
+                    class="img-responsive" 
+                    style="height: 200px; width:160px"> 
+                <h4 list-group-item-heading style="font:bold">{{book.Title}}</h4>
+                <h4 style="color:red">Return By: {{book.ReturnDate | date: 'dd, MMMM yyyy'}}</h4>
+            </button>
+            <br>
+        </div>
+      </div>
+    </ng-container>
+</div>
+<ng-template #loading>
+    <h2>Loading Please Wait</h2>
+</ng-template>

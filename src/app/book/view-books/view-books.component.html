@@ -1,0 +1,34 @@
+<ng-http-loader spinner="sk-wave"></ng-http-loader>
+<div class="row">
+  <div class="col-sm-4">
+    <input for='search' class="form-control" placeholder="Search by Title or Author or category..." 
+      [(ngModel)]="searchText">
+    <!-- <i class="fa fa-search"></i> -->
+  </div>
+  <div class="col-sm-4"></div>
+  <div class="col-sm-4" >
+      <select class="form-control" name="category" [(ngModel)]="Category">
+        <option disabled>Select Category</option>
+        <option [value]="'All'">All</option>
+        <option *ngFor="let category of categories" [value]="category.CategoryName">
+          {{category.CategoryName}}
+        </option>
+      </select>
+  </div>
+</div>
+<br>
+<div class="row">
+  <ng-container *ngIf="fireBooks.length>0;else noBooks">
+    <div *ngFor="let fireBook of fireBooks | SearchBookPipe : searchText | 
+              CategoryPipe: Category, let i = index">
+      <div class="clearfix" *ngIf="i%4==0"></div>
+      <div class="col-md-3">
+        <app-book-card [fireBook]="fireBook"></app-book-card>
+        <br>
+      </div>
+    </div>
+  </ng-container>
+</div>
+<ng-template #noBooks>
+    <h2>{{messageToDisplay}}</h2>
+</ng-template>

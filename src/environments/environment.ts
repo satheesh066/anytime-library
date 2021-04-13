@@ -3,7 +3,13 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiBaseUri: 'https://angular-201-project.firebaseio.com/',
+  booksCollection: 'books',
+  issuedBooksCollection: 'issuedBooks',
+  userCollection: 'users',
+  categoryCollection: 'category',
+  userRatingCollection: 'userRatings'
 };
 
 /*

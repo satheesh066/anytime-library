@@ -1,0 +1,133 @@
+<ng-http-loader spinner="sk-wave"></ng-http-loader>
+<div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <br>
+        <img [src]="fireBook?.ImageUrl" alt="{{fireBook?.Title}}" class="img-responsive" style="max-height: 400px;">
+      </div>
+      <div class="col-md-9">
+        <div class="row">
+          <div class="col-md-8">
+            <h2>{{fireBook?.Title}}</h2>
+            <h4>{{fireBook?.Authors}}</h4>
+          </div>
+          <div class="col-md-4">
+            <br>
+            <star-rating 
+              [value]="fireBook?.AvgRating!" 
+              [totalstars]="5" 
+              checkedcolor="red" 
+              uncheckedcolor="black" 
+              size="24px" 
+              [readonly]="true">
+            </star-rating>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12" [innerHTML]="fireBook?.Description">
+          </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <h4>Category: {{ fireBook?.Category }}</h4>
+                <h4>Location : {{ fireBook?.Location }}</h4>
+                <h4>Quantity : {{ fireBook?.Quantity }}</h4>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="margin-top:10px">
+        <div class="col-md-3"></div>
+        <div class="col-md-2">
+          <button type="button" class="btn btn-lg btn-outline-secondary" (click)="onRedirect()">Back</button>
+        </div>
+        <div class="col-md-3"></div>
+        <div class="col-md-4">
+          <button type="button" *ngIf="fireBook?.Quantity!=0" class="btn btn-lg btn-primary" (click)="onIssueBook()">Issue</button>
+          &nbsp;
+          <button type="button" *ngIf="userRole !== 'User'" class="btn btn-lg btn-primary" (click)="onEdit()">Edit</button>
+          &nbsp;
+          <button class="btn btn-lg" style="background-color: green;color: white" 
+            type="submit"
+            (click)="onReview()">Review</button>
+            &nbsp;
+          <button class="btn btn-lg btn-danger" 
+            type="submit"
+            *ngIf="userRole !== 'User'"
+            (click)="onDelete()">Delete</button>
+        </div>
+    </div>
+</div>
+<div class="container" *ngIf="showRating" >
+  <br>
+  <br>
+  <br>
+  <!-- <div class="list-group-item"> -->
+  <div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-9">
+      <star-rating 
+        [value]="userRating?.Rating!" 
+        [totalstars]="5" 
+        checkedcolor="red" 
+        uncheckedcolor="black" 
+        size="24px" 
+        [readonly]="false"
+        (rate)="onRatingChange($event)">
+    </star-rating>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-sm-3"></div>
+      <div class="col-md-9">
+        <label for="comments">Comments</label> 
+        <textarea 
+          name="review" 
+          class="form-control" 
+          id="review" 
+          cols="4" 
+          [(ngModel)]="userRating.Review">
+        </textarea>
+      </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-sm-3">
+    </div>
+    <div class="col-sm-9">
+      <button class="btn btn-primary btn-lg"
+        (click)="onRatingSubmit()"
+        style="float: right">Submit</button>
+    </div>
+  </div>
+<!-- </div> -->
+
+<!-- Show List of Rating for the  book -->
+</div>
+<div class="row" *ngIf="userRatings.length>0 && fireBook?.Isbn !== ''">
+  <br>
+  <div *ngFor="let userRating of userRatings, let i = index">
+    <div class="clearfix" *ngIf="i%4==0"></div>
+    <div class="col-md-3">
+        <button style="cursor: pointer"  class="list-group-item" style="height:150px">
+          <star-rating 
+            [value]="userRating?.Rating!" 
+            [totalstars]="5" 
+            checkedcolor="red" 
+            uncheckedcolor="black" 
+            size="24px" 
+            [readonly]="false">
+          </star-rating>
+          <h4 list-group-item-heading style="font:bold">{{userRating?.Name}}</h4>
+          <h4 style="color:dodgerblue">{{userRating?.SubmittedOn | date:'dd, MMMM yyyy'}}</h4>
+          <p>{{userRating?.Review}}</p>           
+        </button>
+        <br>
+    </div>
+  </div>
+</div>
+  
