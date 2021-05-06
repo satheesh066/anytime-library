@@ -50,8 +50,9 @@ export class AuthComponent {
             this.adduser(email);
         }
         else{
-            this.getUserInfo(email);
-            this.router.navigate(['/book/view-books']);
+            this.getUserInfo(email).then(resp => {
+              this.router.navigate(['/book/view-books']);
+            })
         }
       },
       errorMessage => {
