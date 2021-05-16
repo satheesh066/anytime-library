@@ -8,3 +8,10 @@
     margin-right: 5px;
     margin-left: 5px;
 }
+
+.review-card {
+    text-align: center;
+    display: inline-block;
+    width: 200px;
+    margin: 10px;
+}

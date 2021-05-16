@@ -1,9 +1,9 @@
-<button style="cursor: pointer"  class="list-group-item" style="height:350px" (click)="getLink()">
+<button class="list-group-item book-card" (click)="getLink()">
     <img [src]="fireBook.ImageUrl" 
         alt="{{fireBook.Title}}" 
         class="img-responsive" 
-        style="height: 200px; width:160px"> 
-    <h4 list-group-item-heading>{{fireBook.Title}}</h4>
+        > 
+    <h4 class="book-label" list-group-item-heading>{{fireBook.Title}}</h4>
     <star-rating 
         [value]="fireBook?.AvgRating!" 
         [totalstars]="5" 

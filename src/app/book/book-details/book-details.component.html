@@ -114,8 +114,8 @@
     <br>
     <div *ngFor="let userRating of userRatings, let i = index">
       <div class="clearfix" *ngIf="i%4==0"></div>
-      <div class="col-md-3">
-          <button style="cursor: pointer"  class="list-group-item" style="height:150px">
+      <div class="col-md-3 col-sm-3">
+          <button class="list-group-item review-card">
             <star-rating 
               [value]="userRating?.Rating!" 
               [totalstars]="5" 
@@ -124,8 +124,8 @@
               size="24px" 
               [readonly]="true">
             </star-rating>
-            <h4 list-group-item-heading style="font:bold">{{userRating?.Name}}</h4>
-            <h4 style="color:dodgerblue">{{userRating?.SubmittedOn | date:'dd, MMMM yyyy'}}</h4>
+            <label>{{userRating?.Name}}</label>
+            <p style="color:dodgerblue">{{userRating?.SubmittedOn | date:'MMMM yyyy'}}</p>
             <p>{{userRating?.Review}}</p>           
           </button>
           <br>

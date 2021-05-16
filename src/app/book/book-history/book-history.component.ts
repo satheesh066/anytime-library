@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import * as _ from 'lodash';
-// import {MatTableDataSource, MatSort} from '@angular/material';
 
 import { BookService } from '../../services/book.service';
 import { IssuedBook } from '../../models/issuedBook';
