@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminAuthGuard } from './authentication/admin-auth.guard';
 import { AuthComponent } from './authentication/auth.component';
-import { LoggedInGuard } from './authentication/auth.guard';
+import { LoggedInGuard } from './authentication/logged-in.guard';
 import { UserAuthGuard } from './authentication/user-auth.guard';
 import { AddUpdateBookComponent } from './book/add-update-book/add-update-book.component';
 import { BookDetailsComponent } from './book/book-details/book-details.component';

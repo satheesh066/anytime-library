@@ -40,7 +40,7 @@ import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { AuthComponent } from './authentication/auth.component';
 import { AdminAuthGuard } from './authentication/admin-auth.guard';
 import { UserAuthGuard } from './authentication/user-auth.guard';
-import { LoggedInGuard } from './authentication/auth.guard';
+import { LoggedInGuard } from './authentication/logged-in.guard';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 @NgModule({
