@@ -51,6 +51,7 @@
           &nbsp;
           <button class="btn btn-lg" style="background-color: green;color: white" 
             type="submit"
+            *ngIf="userRole !== 'Admin'"
             (click)="onReview()">Review</button>
             &nbsp;
           <button class="btn btn-lg btn-danger" 
@@ -108,25 +109,27 @@
 
 <!-- Show List of Rating for the  book -->
 </div>
-<div class="row" *ngIf="userRatings.length>0 && fireBook?.Isbn !== ''">
-  <br>
-  <div *ngFor="let userRating of userRatings, let i = index">
-    <div class="clearfix" *ngIf="i%4==0"></div>
-    <div class="col-md-3">
-        <button style="cursor: pointer"  class="list-group-item" style="height:150px">
-          <star-rating 
-            [value]="userRating?.Rating!" 
-            [totalstars]="5" 
-            checkedcolor="red" 
-            uncheckedcolor="black" 
-            size="24px" 
-            [readonly]="false">
-          </star-rating>
-          <h4 list-group-item-heading style="font:bold">{{userRating?.Name}}</h4>
-          <h4 style="color:dodgerblue">{{userRating?.SubmittedOn | date:'dd, MMMM yyyy'}}</h4>
-          <p>{{userRating?.Review}}</p>           
-        </button>
-        <br>
+<div class="container-fluid" style="margin-top: 40px;" >
+  <div class="row" *ngIf="userRatings.length>0 && fireBook?.Isbn !== ''">
+    <br>
+    <div *ngFor="let userRating of userRatings, let i = index">
+      <div class="clearfix" *ngIf="i%4==0"></div>
+      <div class="col-md-3">
+          <button style="cursor: pointer"  class="list-group-item" style="height:150px">
+            <star-rating 
+              [value]="userRating?.Rating!" 
+              [totalstars]="5" 
+              checkedcolor="red" 
+              uncheckedcolor="black" 
+              size="24px" 
+              [readonly]="true">
+            </star-rating>
+            <h4 list-group-item-heading style="font:bold">{{userRating?.Name}}</h4>
+            <h4 style="color:dodgerblue">{{userRating?.SubmittedOn | date:'dd, MMMM yyyy'}}</h4>
+            <p>{{userRating?.Review}}</p>           
+          </button>
+          <br>
+      </div>
     </div>
   </div>
 </div>

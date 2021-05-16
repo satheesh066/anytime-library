@@ -50,8 +50,10 @@ export class AuthComponent {
             this.adduser(email);
         }
         else{
-            this.getUserInfo(email);
-            this.router.navigate(['/book/view-books']);
+          this.getUserInfo(email)
+            .then(response => {
+              this.router.navigate(['/book/view-books']);
+            })
         }
       },
       errorMessage => {
@@ -66,7 +68,7 @@ export class AuthComponent {
   adduser(email: string) {
     const user : User = {
         Id: '',
-        Name: '',
+        Name: email,
         Role: 'User',
         FavoriteGenres: [],
         Friends: '',
@@ -79,7 +81,7 @@ export class AuthComponent {
         (response) => {
           if (response !== null) {
             this.userService.users.push(user);
-            localStorage.setItem('UserName', user.Name);
+            this.saveUserToLocalStorage(user);
             this.notificationService.showSuccessNotification("User signup successfull");
             this.router.navigate(['book/view-books']);
           } else {
@@ -95,7 +97,7 @@ export class AuthComponent {
       );
   }
 
-  getUserInfo(email: string) {
+  getUserInfo(email: string): Promise<any> {
     return new Promise((resolve, reject) => {
         this.userService.getUsers()
             .subscribe(
@@ -112,15 +114,19 @@ export class AuthComponent {
                             this.currentUser = user;
                             this.userService.loggedInUser = user;
                             this.userService.updatedLoggedInUserInfo.emit(user);
-                            localStorage.setItem('Role', user.Role);
-                            localStorage.setItem('SocialId', user.SocialId);
-                            localStorage.setItem('UserName', user.Name);
-                            localStorage.setItem('Picture', user.Picture);
+                            this.saveUserToLocalStorage(user);
                         }
                         resolve(this.currentUser);
                     }
                 );
             });
         });
+    }
+
+    saveUserToLocalStorage(user: User) {
+      localStorage.setItem('Role', user.Role);
+      localStorage.setItem('SocialId', user.SocialId);
+      localStorage.setItem('UserName', user.Name);
+      localStorage.setItem('Picture', user.Picture);
     }
 }

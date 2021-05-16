@@ -21,7 +21,6 @@ export class BookCardComponent implements OnInit {
     }
 
     getLink() {
-      this.bookSevice.fireBookDetails = this.fireBook;
       this.router.navigate(['/book/book-details', this.fireBook.Id]);
     }
 

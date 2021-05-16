@@ -132,7 +132,7 @@ export class AddUpdateBookComponent implements OnInit, OnDestroy {
           (response) => {
             if (response !== null) {
               this.message = 'Book Details updated successfully';
-              this.bookService.fireBookDetails = this.fireBook;
+              // this.bookService.fireBookDetails = this.fireBook;
               this.router.navigate(['/book/book-details', this.fireBook.Id]);
               this.notificationService.showSuccessNotification(this.message);
             } else {

@@ -16,7 +16,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isAuthenticated = false;
   notificationMessage!: string;
   user: User;
-  private userSub!: Subscription;
+  private userAuthSub!: Subscription;
+  private loggedInUserSub!: Subscription;
 
   constructor(
     private userService: UserService,
@@ -27,24 +28,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.userSub = this.authService.userAuth.subscribe(userAuth => {
+    this.userAuthSub = this.authService.userAuth.subscribe(userAuth => {
       this.isAuthenticated = !!userAuth;
     });
 
-    this.userService.updatedLoggedInUserInfo.subscribe(
+    this.loggedInUserSub = this.userService.updatedLoggedInUserInfo.subscribe(
       (user: User) => {
         this.user = user;
-      }
-    );
-    // if (this.user == null) {
-    //   this.checkUser().then(
-    //     (response: boolean) => {
-    //       if (!response) {
-    //         this.router.navigate(['add-user-info']);
-    //        }
-    //     }
-    //   );
-    // }
+      });
   }
 
   checkUser() {
@@ -66,7 +57,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onEditProfile() {
-    this.router.navigate(['/update-user-info/' + this.user.SocialId]);
+    this.router.navigate(['/add-user-info']);
   }
 
   onLogout() {
@@ -74,6 +65,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.userSub.unsubscribe();
+    this.userAuthSub.unsubscribe();
+    this.loggedInUserSub.unsubscribe();
   }
 }

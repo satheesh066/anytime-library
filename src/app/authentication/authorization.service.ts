@@ -180,20 +180,5 @@ export class AuthorizationService {
         this.router.navigate(['unauthorizedUser']);
       }
       return authStatus;
-    // return this.getUsersData()
-    //     .then(
-    //         (response: any) => {
-    //             this.userRole = response;
-    //             roles.forEach((role) => {
-    //                 if (role === this.userRole) {
-    //                     this.authStatus = true;
-    //                 }
-    //             });
-    //             if (!this.authStatus) {
-    //                 this.router.navigate(['unauthorizedUser']);
-    //             }
-    //             return this.authStatus;
-    //         }
-    //     );
     }
 }

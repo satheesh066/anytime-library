@@ -13,15 +13,17 @@
           <li routerLinkActive="active" *ngIf="user?.Role === 'Admin'"><a routerLink="/book/add-book">Add Book</a></li>
         </ng-container>
       </ul>
-      <ul class="nav navbar-nav navbar-right" *ngIf="isAuthenticated">
-        <li><a style="cursor: pointer;" role="button" (click)="onLogout()">LogOut</a></li>
-        <li class="dropdown" appDropdown>
-          <a style="cursor: pointer;" class="dropdown-toggle" role="button">{{ user?.Name }} <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a style="cursor: pointer;" routerLink="/add-user-info">Edit Profile</a></li>
-            <li><a style="cursor: pointer;">{{ user?.SocialId }}</a></li>
-          </ul>   
-        </li>
-      </ul>
+      <!-- <div class="container"> -->
+        <ul class="nav navbar-nav navbar-right" style="margin-right: 80px;" *ngIf="isAuthenticated">
+          <li class="dropdown" appDropdown>
+            <a style="cursor: pointer;" class="dropdown-toggle" role="button">{{ user?.Name }} <span class="caret"></span></a>
+            <ul class="dropdown-menu" aria-labelledby="nav-dropdown">
+              <li><a style="cursor: pointer;" role="button" (click)="onEditProfile()" >Edit Profile</a></li>
+              <li>{{ user?.SocialId }}/li>
+              <li><a style="cursor: pointer;" role="button" (click)="onLogout()">LogOut</a></li>
+            </ul>   
+          </li>
+        </ul>
+      <!-- </div> -->
   </div>
 </nav>

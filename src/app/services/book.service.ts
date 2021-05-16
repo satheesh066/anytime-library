@@ -9,11 +9,13 @@ import { UrlService } from './url.service';
 import { Book } from '../models/book';
 
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class BookService {
     url!: string;
     bookToUpdate!: FireBook;
-    fireBookDetails!: FireBook;
+    // fireBookDetails!: FireBook;
     collectionName!: string;
 
     constructor(private http: HttpClient,

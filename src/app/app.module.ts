@@ -18,7 +18,6 @@ import { ToastrModule } from 'ngx-toastr';
 import { NotificationService } from './services/notification.service';
 import { CommonModule } from '@angular/common';
 import { UrlService } from './services/url.service';
-import { AuthHttpService } from './services/auth-http.service';
 import { BookService } from './services/book.service';
 import { CategoryService } from './services/category.service';
 import { ViewBooksComponent } from './book/view-books/view-books.component';
@@ -84,16 +83,12 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
     })
   ],
   providers: [
-    // AdalService,
-    // AdalGuard,
-    // {provide: HTTP_INTERCEPTORS, useClass: AdalInterceptor, multi: true },
     AuthorizationService,
     AuthSecretService,
     AdminAuthGuard,
     UserAuthGuard,
     LoggedInGuard,
     NotificationService,
-    AuthHttpService,
     UrlService,
     BookService,
     CategoryService,

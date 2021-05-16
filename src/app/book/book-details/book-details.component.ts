@@ -45,7 +45,6 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
       this.fireBook = this.initializeFireBook();
       this.issuedBooks = [];
       this.getIssedBooks();
-      this.getAllRatings();
   }
 
   ngOnInit() {
@@ -53,21 +52,22 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     this.userRole = localStorage.getItem('Role')!;
     this.userName = localStorage.getItem('UserName')!;
     this.id = this.activeRoute.snapshot.params['id'];
-    if ((this.bookService.fireBookDetails === undefined) ||
-          (this.bookService.fireBookDetails.Isbn === '')) {
-      this.bookService.getBook(this.id)
-        .subscribe(
-          (response: any) => {
-            response = response.length !== 0 ? response : {};
-            const fireBook = this.bookService.convertToFireBook(response, this.id);
-            this.bookService.fireBookDetails = fireBook;
-            this.fireBook = fireBook;
-            this.initializeBookToIssue();
-        });
-    }else {
-      this.fireBook = this.bookService.fireBookDetails;
-      this.initializeBookToIssue();
-    }
+    this.bookService.getBook(this.id)
+      .subscribe(
+        (response: any) => {
+          response = response.length !== 0 ? response : {};
+          const fireBook = this.bookService.convertToFireBook(response, this.id);
+          // this.bookService.fireBookDetails = fireBook;
+          this.fireBook = fireBook;
+          this.initializeBookToIssue();
+          this.getAllRatings();
+      });
+    // if ((this.bookService.fireBookDetails === undefined) ||
+    //       (this.bookService.fireBookDetails.Isbn === '')) {
+    // }else {
+    //   this.fireBook = this.bookService.fireBookDetails;
+    //   this.initializeBookToIssue();
+    // }
   }
 
   initializeBookToIssue() {
@@ -253,6 +253,6 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.bookService.fireBookDetails =  this.initializeFireBook();
+    // this.bookService.fireBookDetails =  this.initializeFireBook();
   }
 }
