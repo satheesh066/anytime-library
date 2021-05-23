@@ -42,6 +42,7 @@ import { AdminAuthGuard } from './authentication/admin-auth.guard';
 import { UserAuthGuard } from './authentication/user-auth.guard';
 import { LoggedInGuard } from './authentication/logged-in.guard';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
   imports: [
     CommonModule,
     BrowserModule,
+    NgbModule,
     AppRoutingModule,
     RatingModule,
     HttpClientModule,
