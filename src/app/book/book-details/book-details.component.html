@@ -52,7 +52,7 @@
           <button class="btn btn-lg" style="background-color: green;color: white" 
             type="submit"
             *ngIf="userRole !== 'Admin'"
-            (click)="onReview()">Review</button>
+            (click)="triggerReview(reviewModal);viewRating=false;">Review</button>
             &nbsp;
           <button class="btn btn-lg btn-danger" 
             type="submit"
@@ -61,61 +61,15 @@
         </div>
     </div>
 </div>
-<div class="container" *ngIf="showRating" >
-  <br>
-  <br>
-  <br>
-  <!-- <div class="list-group-item"> -->
-  <div class="row">
-    <div class="col-md-3">
-    </div>
-    <div class="col-md-9">
-      <star-rating 
-        [value]="userRating?.Rating!" 
-        [totalstars]="5" 
-        checkedcolor="red" 
-        uncheckedcolor="black" 
-        size="24px" 
-        [readonly]="false"
-        (rate)="onRatingChange($event)">
-    </star-rating>
-    </div>
-  </div>
-  <br>
-  <div class="row">
-    <div class="col-sm-3"></div>
-      <div class="col-md-9">
-        <label for="comments">Comments</label> 
-        <textarea 
-          name="review" 
-          class="form-control" 
-          id="review" 
-          cols="4" 
-          [(ngModel)]="userRating.Review">
-        </textarea>
-      </div>
-  </div>
-  <br>
-  <div class="row">
-    <div class="col-sm-3">
-    </div>
-    <div class="col-sm-9">
-      <button class="btn btn-primary btn-lg"
-        (click)="onRatingSubmit()"
-        style="float: right">Submit</button>
-    </div>
-  </div>
-<!-- </div> -->
 
 <!-- Show List of Rating for the  book -->
-</div>
 <div class="container-fluid" style="margin-top: 40px;" >
   <div class="row" *ngIf="userRatings.length>0 && fireBook?.Isbn !== ''">
     <br>
     <div *ngFor="let userRating of userRatings, let i = index">
       <div class="clearfix" *ngIf="i%4==0"></div>
       <div class="col-md-3 col-sm-3">
-          <button class="list-group-item review-card">
+          <button class="list-group-item review-card" (click)="triggerReview(reviewModal);setShowRating(userRating)">
             <star-rating 
               [value]="userRating?.Rating!" 
               [totalstars]="5" 
@@ -126,11 +80,50 @@
             </star-rating>
             <label>{{userRating?.Name}}</label>
             <p style="color:dodgerblue">{{userRating?.SubmittedOn | date:'MMMM yyyy'}}</p>
-            <p>{{userRating?.Review}}</p>           
+            <p>{{userRating?.Title}}</p>           
           </button>
           <br>
       </div>
     </div>
   </div>
 </div>
-  
+
+<ng-template #reviewModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Review Book</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <star-rating 
+        [value]="userRating?.Rating!" 
+        [totalstars]="5" 
+        checkedcolor="red" 
+        uncheckedcolor="black" 
+        size="24px" 
+        [readonly]="viewRating"
+        (rate)="onRatingChange($event)">
+    </star-rating>
+
+    <input for="title" 
+      class="form-control" maxlength="25" placeholder="Title" 
+      [(ngModel)]="userRating.Title" [readOnly]="viewRating"/>
+    <br>
+    <textarea 
+      name="review" 
+      class="form-control" 
+      id="review" 
+      cols="4" 
+      placeholder="Comments"
+      [(ngModel)]="userRating.Review"
+      [readOnly]="viewRating">
+    </textarea>
+
+    <div *ngIf="!viewRating" class="modal-footer">
+      <button class="btn btn-primary btn-lg"
+        (click)="modal.close('Save click')"
+        style="float: right">Submit</button>
+    </div>
+  </div>
+</ng-template>

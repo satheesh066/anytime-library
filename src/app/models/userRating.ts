@@ -5,7 +5,8 @@ export class UserRating {
         public Review: string,
         public Name: string,
         public SubmittedBy: string,
-        public SubmittedOn: Date
+        public SubmittedOn: Date,
+        public Title: string
         ) {
     }
 }

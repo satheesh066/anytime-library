@@ -10,6 +10,7 @@ import { UserRating } from '../../models/userRating';
 import { NotificationService } from '../../services/notification.service';
 import { IssuedBooksService } from '../../services/issued-books.service';
 import { BookReviewService } from '../../services/book-review.service';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-book-details',
@@ -17,10 +18,9 @@ import { BookReviewService } from '../../services/book-review.service';
   styleUrls: ['./book-details.component.css']
 })
 export class BookDetailsComponent implements OnInit, OnDestroy {
-  showRating: boolean;
   userRating:  UserRating;
   userRatings: UserRating[];
-  fireBook: FireBook;
+  fireBook!: FireBook;
   id!: string;
   userMailId!: string;
   userRole!: string;
@@ -30,18 +30,20 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
   issuedBooks: IssuedBook[];
   books!: Book[];
   isAlreadyIssued: boolean;
+  viewRating = false;
+
   constructor(private activeRoute: ActivatedRoute,
     private bookService: BookService,
     private issuedBooksService: IssuedBooksService,
     private bookReviewService: BookReviewService,
     private router: Router,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private modalService: NgbModal
     ) {
       this.isIssueBook = false;
       this.isAlreadyIssued = false;
-      this.showRating = false;
       this.userRatings = [];
-      this.userRating = new UserRating('', 5, '', this.userName, this.userMailId, new Date());
+      this.userRating = new UserRating('', 5, '', this.userName, this.userMailId, new Date(), '');
       this.fireBook = this.initializeFireBook();
       this.issuedBooks = [];
       this.getIssedBooks();
@@ -57,17 +59,10 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
         (response: any) => {
           response = response.length !== 0 ? response : {};
           const fireBook = this.bookService.convertToFireBook(response, this.id);
-          // this.bookService.fireBookDetails = fireBook;
           this.fireBook = fireBook;
           this.initializeBookToIssue();
           this.getAllRatings();
       });
-    // if ((this.bookService.fireBookDetails === undefined) ||
-    //       (this.bookService.fireBookDetails.Isbn === '')) {
-    // }else {
-    //   this.fireBook = this.bookService.fireBookDetails;
-    //   this.initializeBookToIssue();
-    // }
   }
 
   initializeBookToIssue() {
@@ -164,8 +159,7 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
         },
         (error) => {
           console.log(error);
-        }
-      );
+        });
   }
 
   getIssedBooks() {
@@ -181,8 +175,7 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
               }
             }
           }
-        }
-      );
+        });
   }
 
   getAllRatings() {
@@ -195,10 +188,6 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
               }
             }
           });
-  }
-
-  onReview() {
-    this.showRating = true;
   }
 
   onRatingSubmit() {
@@ -216,7 +205,6 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
         (response) => {
           if (response !== null) {
             this.userRatings.push(this.userRating);
-            this.showRating = false;
             this.notificationService.showSuccessNotification('Review submitted Successfully');
             this.userRating = {
               Name: this.userName,
@@ -225,6 +213,7 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
               Isbn: this.fireBook.Isbn,
               Review: '',
               SubmittedOn: new Date(),
+              Title: ''
             };
           }else {
             this.notificationService.showErrorNotification('Error occured while submitting review');
@@ -252,7 +241,29 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     this.userRating.Rating = event.newValue;
   }
 
+  triggerReview(content: any) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((res) => {
+      debugger;
+      this.onRatingSubmit();
+    },(reason) => {
+      this.viewRating = false;
+      this.userRating = {
+        Name: this.userName,
+        Rating: 0,
+        SubmittedBy: this.userMailId,
+        Isbn: this.fireBook.Isbn,
+        Review: '',
+        SubmittedOn: new Date(),
+        Title: ''
+      };
+    });
+  }
+
+  setShowRating(userRating: UserRating) {
+    this.viewRating = true;
+    this.userRating = userRating;
+  }
+
   ngOnDestroy() {
-    // this.bookService.fireBookDetails =  this.initializeFireBook();
   }
 }
